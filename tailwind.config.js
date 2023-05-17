@@ -5,13 +5,15 @@ module.exports = {
   theme: {
     screens: {
       xs: "614px",
-      sm: "1002px",
-      md: "1022px",
-      lg: "1092px",
+      //sm md lg 定义为差不多大小
+      sm: "1002px", // 原值640px
+      md: "1022px", // 原值768px
+      lg: "1092px", // 原值1024px
       xl: "1280px",
     },
     extend: {
       colors: {
+        // 自定义颜色
         dim: {
           50: "#5F99F7",
           100: "#5F99F7",

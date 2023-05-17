@@ -1,42 +1,7 @@
-# Nuxt 3 Minimal Starter
+# 链接
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+> 视频：https://www.youtube.com/watch?v=_cM4j9_LfQk&t=1053s&ab_channel=insidewebdev
 
-## Setup
+> 仓库：https://github.com/insidewebdev/twitter-clone
 
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+> logo：https://gist.github.com/hassnian/a8ef7f243dcc933887b31af77e73df29
