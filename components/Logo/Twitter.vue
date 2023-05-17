@@ -1,5 +1,6 @@
 <template>
   <!-- Twitter Logo -->
+  <!-- 正常模式下是蓝色，暗黑模式下是白色 -->
   <svg viewBox="0 0 24 24" class="text-blue-400 dark:text-white" fill="currentColor">
     <g>
       <path
