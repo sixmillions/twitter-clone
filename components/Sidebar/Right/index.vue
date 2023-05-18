@@ -9,7 +9,7 @@
         </div>
       </SidebarRightPreviewCardItem>
     </SidebarRightPreviewCard>
-    <!-- Preview Card : Who to fllow -->
+    <!-- Preview Card : Who to follow -->
     <SidebarRightPreviewCard title="Who to follow">
       <SidebarRightPreviewCardItem v-for="item in whoToFollowItems">
         <div class="flex flex-row justify-between p-2">

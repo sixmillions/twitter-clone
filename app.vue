@@ -33,7 +33,7 @@
             </div>
           </div>
           <!-- Main content -->
-          <main class="bg-red-300 col-span-12 xs:col-span-11 md:col-span-8 xl:col-span-6">
+          <main class="col-span-12 xs:col-span-11 md:col-span-8 xl:col-span-6">
             <RouterView />
           </main>
           <!-- Right Sidebar -->

@@ -14,7 +14,7 @@ const { twitterBorderColor, defaultTransition } = useTailwindConfig()
 const props = defineProps({
   title: {
     type: String,
-    requird: true
+    required: true
   }
 })
 </script>
