@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 hover:bg-gray-200 cursor-pointer dark:bg-dim-300" :class="wrapperClass">
+  <div class="p-3 hover:bg-gray-200 cursor-pointer dark:bg-dim-300 dark:hover:bg-dim-200" :class="wrapperClass">
     <slot></slot>
   </div>
 </template>

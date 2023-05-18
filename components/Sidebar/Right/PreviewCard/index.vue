@@ -4,7 +4,7 @@
       {{ props.title }}
     </h1>
     <slot></slot>
-    <div class="p-3 text-sm text-sky-400 cursor-pointer hover:bg-gray-200 dark:hover:bg-dim-300" :class="defaultTransition">
+    <div class="p-3 text-sm text-sky-400 cursor-pointer hover:bg-gray-200 dark:hover:bg-dim-200" :class="defaultTransition">
       Show More
     </div>
   </div>
