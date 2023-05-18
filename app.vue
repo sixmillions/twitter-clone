@@ -22,7 +22,7 @@
             xs:col-span-1：此类定义了在xs屏幕大小上网格中此元素的跨度为1列。
             xl:col-span-2：此类定义了在xl屏幕大小上网格中此元素的跨度为2列。
           -->
-          <div class="hidden md:block xs:col-span-1 xl:col-span-2">
+          <div class="hidden xs:block xs:col-span-1 md:col-span-1 xl:col-span-2">
             <!--
               "sticky" 表示元素相对于其最近的具有滚动框的祖先元素（或浏览器窗口）固定在指定位置。
               "top-0" 设置元素的顶部边缘距离其最近的具有定位属性的祖先元素的顶部边缘的距离为 0。
@@ -33,7 +33,7 @@
             </div>
           </div>
           <!-- Main content -->
-          <main class="bg-red-300 col-span-12 md:col-span-8 xl:col-span-6">
+          <main class="bg-red-300 col-span-12 xs:col-span-11 md:col-span-8 xl:col-span-6">
             <RouterView />
           </main>
           <!-- Right Sidebar -->
