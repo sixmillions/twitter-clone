@@ -7,12 +7,14 @@ import { decodeRefreshToken, generateTokens } from '../../utils/jwt'
  * 使用 refreshToken 刷新 accessToken
  */
 export default defineEventHandler(async (event) => {
+  console.log('auth: /api/auth/refresh')
   // https://nuxt.com/docs/guide/directory-structure/server#accessing-request-cookies
   const cookies = parseCookies(event)
   // cookie中获取 refreshToken （login的时候设置进去的）
   const refreshToken = cookies.refresh_token
 
   if (!refreshToken) {
+    console.log('auth: 无token')
     return sendError(event, createError({
       statusCode: 401,
       statusMessage: 'Refresh Token Is Invalid'
@@ -23,6 +25,7 @@ export default defineEventHandler(async (event) => {
   const rToken = await getRefreshTokenByToken(refreshToken)
 
   if (!rToken) {
+    console.log('auth: db没有该token')
     return sendError(event, createError({
       statusCode: 401,
       statusMessage: 'Refresh Token Is Invalid'

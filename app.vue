@@ -3,8 +3,13 @@
   <div :class="{ 'dark': darkMode }">
     <!-- 正常背景色为白色，暗黑模式下为dim-900(自定义颜色，类似于黑色) -->
     <div class="bg-white dark:bg-dim-900">
+
+      <!-- loading界面 -->
+      <div v-if="isAuthLoading">
+        <LoadingPage />
+      </div>
       <!-- 元素的最小高度为 100%，即与父元素的高度相同，如果父元素的高度为 auto，则该元素的高度也为 auto。 -->
-      <div v-if="user" class="min-h-full">
+      <div v-else-if="user" class="min-h-full">
         <!--
           grid: 表示这是一个网格布局。
           grid-cols-12: 定义网格有12列。您可以更改数字以定义不同数量的列。
@@ -44,6 +49,7 @@
           </div>
         </div>
       </div>
+      <!-- 认证界面 -->
       <AuthPage v-else />
     </div>
   </div>
@@ -51,10 +57,17 @@
 
 <script setup>
 const darkMode = ref(false)
-const { useAuthUser, initAuth } = useAuth()
+const { useAuthUser, initAuth, useAuthLoading } = useAuth()
+
+const isAuthLoading = useAuthLoading()
 const user = useAuthUser()
 
 onBeforeMount(() => {
+  console.log('auth: onBeforeMount')
   initAuth()
+})
+
+onMounted( ()=> {
+  console.log('auth: onMounted');
 })
 </script>

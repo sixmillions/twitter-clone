@@ -26,6 +26,6 @@ async function handleLogin() {
   } finally {
     data.loading = false
   }
-  alert(JSON.stringify(data))
+  // alert(JSON.stringify(data))
 }
 </script>

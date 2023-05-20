@@ -3,7 +3,12 @@ import { decodeAccessToken } from '../utils/jwt'
 import { sendError } from 'h3'
 import { getUserById } from '../db/user'
 
+/**
+ * 所有路由都会走这里
+ */
 export default defineEventHandler(async (event) => {
+
+  console.log('----------middleware auth------------', event.node.req.url)
 
   // 需要认证的url
   const endpoints = [
@@ -19,6 +24,8 @@ export default defineEventHandler(async (event) => {
     // 不需要权限url，直接返回
     return
   }
+
+  console.log('----------need auth------------', event.node.req.url)
 
   // authorization:Bear xxxxx
   const token = event.node.req.headers['authorization']?.split(' ')[1]
