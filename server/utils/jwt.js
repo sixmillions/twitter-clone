@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const generateAccessToken = (user) => {
+export const generateAccessToken = (user) => {
   const config = useRuntimeConfig()
   // console.log(111, config.jwtAccessTokenSecret);
   // console.log(222, config.jwtRefreshTokenSecret);
@@ -9,7 +9,7 @@ const generateAccessToken = (user) => {
   })
 }
 
-const generateRefreshToken = (user) => {
+export const generateRefreshToken = (user) => {
   const config = useRuntimeConfig()
   return jwt.sign({ userId: user.id }, config.jwtRefreshTokenSecret, {
     expiresIn: '4h'
@@ -19,8 +19,6 @@ const generateRefreshToken = (user) => {
 export const generateTokens = (user) => {
   const accessToken = generateAccessToken(user)
   const refreshToken = generateRefreshToken(user)
-
-
   return {
     accessToken,
     refreshToken
@@ -32,5 +30,23 @@ export const sendRefreshToken = (event, token) => {
     httpOnly: true, //如果某一个Cookie 选项被设置成 HttpOnly = true 的话，那此Cookie 只能通过服务器端修改，Js 是操作不了的
     sameSite: true
   })
+}
+
+export const decodeRefreshToken = (token) => {
+  try {
+    const config = useRuntimeConfig()
+    return jwt.verify(token, config.jwtRefreshTokenSecret)
+  } catch (error) {
+    return null
+  }
+}
+
+export const decodeAccessToken = (token) => {
+  try {
+    const config = useRuntimeConfig()
+    return jwt.verify(token, config.jwtAccessTokenSecret)
+  } catch (error) {
+    return null
+  }
 }
 

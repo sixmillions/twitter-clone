@@ -4,7 +4,7 @@
     <!-- 正常背景色为白色，暗黑模式下为dim-900(自定义颜色，类似于黑色) -->
     <div class="bg-white dark:bg-dim-900">
       <!-- 元素的最小高度为 100%，即与父元素的高度相同，如果父元素的高度为 auto，则该元素的高度也为 auto。 -->
-      <div class="min-h-full">
+      <div v-if="user" class="min-h-full">
         <!--
           grid: 表示这是一个网格布局。
           grid-cols-12: 定义网格有12列。您可以更改数字以定义不同数量的列。
@@ -44,10 +44,17 @@
           </div>
         </div>
       </div>
+      <AuthPage v-else />
     </div>
   </div>
 </template>
 
 <script setup>
 const darkMode = ref(false)
+const { useAuthUser, initAuth } = useAuth()
+const user = useAuthUser()
+
+onBeforeMount(() => {
+  initAuth()
+})
 </script>
