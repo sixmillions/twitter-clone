@@ -12,3 +12,10 @@ export const createUser = (userData) => {
   })
 }
 
+export const getUserByUsername = (username) => {
+  return prisma.user.findUnique({
+    where: {
+      username
+    }
+  })
+}

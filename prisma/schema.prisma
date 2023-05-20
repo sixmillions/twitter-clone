@@ -23,5 +23,19 @@ model User {
   createdAt DateTime? @default(now()) @map("created_at")
   updatedAt DateTime? @default(now()) @updatedAt @map("update_at")
 
+  RefreshToken RefreshToken[]
+
   @@map("tm_user")
+}
+
+model RefreshToken {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  token     String    @unique @db.VarChar(200)
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedAt DateTime? @default(now()) @updatedAt @map("update_at")
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("tt_refresh_token")
 }
