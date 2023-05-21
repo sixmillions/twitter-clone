@@ -1,20 +1,24 @@
 // 注册post请求
 // curl -X POST -H 'Content-Type: application/json' -d '{"email":"test@gmail.com","username":"six","password":"123456","repeatPassword":"123456","name":"six"}' localhost:3000/api/auth/register
 // https://www.jsdocs.io/package/h3#sendError
-import { sendError } from 'h3'
+// import { sendError } from 'h3' // 自动引入 https://github.com/unjs/h3#utilities
 import { createUser } from '../../db/user'
 import exclude from '../../excluding'
+
+/**
+ * 用户注册api
+ */
 export default defineEventHandler(async (event) => {
   // https://nuxt.com/docs/guide/directory-structure/server#handling-requests-with-body
   const body = await readBody(event);
   const { username, email, password, repeatPassword, name, avatar } = body
 
   if (!username || !email || !password || !repeatPassword || !name) {
-    return sendError(event, createError({ statusCode: 400, message: "无效的用户名密码" }))
+    return sendError(event, createError({ statusCode: 400, statusMessage: 'Invalid username or password.', message: "无效的用户名密码" }))
   }
 
   if (password !== repeatPassword) {
-    return sendError(event, createError({ statusCode: 400, message: "两次密码不一致" }))
+    return sendError(event, createError({ statusCode: 400, statusMessage: 'The passwords you entered do not match.', message: "两次密码不一致" }))
   }
 
   try {
@@ -32,14 +36,15 @@ export default defineEventHandler(async (event) => {
       username,
       password,
       name,
+      // 用户头像，可选
       avatar: avatar ? avatar : 'https://picsum.photos/200/200'
     }
     const newUser = await createUser(userData);
-    // 去掉密码返回
+    // 去掉密码再返回结果
     return exclude(newUser, ['password'])
   }
   catch (error) {
-    console.log(error);
-    return sendError(event, createError({ statusCode: 400, message: "创建用户失败" }))
+    console.error(error);
+    return sendError(event, createError({ statusCode: 400, statusMessage: 'create new user error.', message: "创建用户失败" }))
   }
 });
