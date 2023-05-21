@@ -1,7 +1,6 @@
-import { sendError } from 'h3'
 import { getRefreshTokenByToken } from '../../db/refreshToken'
 import { getUserById } from '../../db/user'
-import { decodeRefreshToken, generateTokens } from '../../utils/jwt'
+import { decodeRefreshToken } from '../../utils/jwt'
 
 /**
  * 使用 refreshToken 刷新 accessToken
@@ -36,6 +35,7 @@ export default defineEventHandler(async (event) => {
   const { userId } = decodeRefreshToken(refreshToken)
 
   try {
+    // TODO 感觉不合理，这里为什么还要获取user信息？
     const user = await getUserById(userId)
     const accessToken = generateAccessToken(user)
     return { access_token: accessToken }
