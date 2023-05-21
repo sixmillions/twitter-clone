@@ -16,6 +16,9 @@ export const generateRefreshToken = (user) => {
   })
 }
 
+/**
+ * 生成accessToken和refreshToken
+ */
 export const generateTokens = (user) => {
   const accessToken = generateAccessToken(user)
   const refreshToken = generateRefreshToken(user)
@@ -25,7 +28,11 @@ export const generateTokens = (user) => {
   }
 }
 
+/**
+ * 将refreshToken设置到浏览器的cookie中
+ */
 export const sendRefreshToken = (event, token) => {
+  // https://www.jsdocs.io/package/h3#setCookie
   setCookie(event, 'refresh_token', token, {
     httpOnly: true, //如果某一个Cookie 选项被设置成 HttpOnly = true 的话，那此Cookie 只能通过服务器端修改，Js 是操作不了的
     sameSite: true

@@ -7,7 +7,7 @@ export const createRefreshToken = (refreshToken) => {
   const token = prisma.refreshToken.create({
     data: refreshToken
   }).catch((error) => {
-    console.error('db token: ', error);
+    console.error('db token createRefreshToken: ', error);
   })
   return token
 }
@@ -19,7 +19,7 @@ export const getRefreshTokenByToken = (refreshToken) => {
       token: refreshToken
     }
   }).catch((error) => {
-    console.error('db token: ', error);
+    console.error('db token getRefreshTokenByToken: ', error);
   })
   return token
 }
