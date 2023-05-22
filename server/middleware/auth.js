@@ -21,11 +21,11 @@ export default defineEventHandler(async (event) => {
   })
 
   if (!isHandledByThisMiddleware) {
-    // 不需要权限url，直接返回
+    // 不需要判断权限url，直接返回
     return
   }
 
-  console.log('----------need auth------------', event.node.req.url)
+  console.log('----------need auth url------------', event.node.req.url)
 
   // authorization:Bear xxxxx
   const token = event.node.req.headers['authorization']?.split(' ')[1]
@@ -40,10 +40,11 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const user = await getUserById(decode.userId)
+    // const user = await getUserById(decode.userId)
+    const user = decode.user
     event.context.auth = { user }
   } catch (error) {
-
+    console.log('middleware auth error', error);
   }
 
 })

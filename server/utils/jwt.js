@@ -1,11 +1,13 @@
 import jwt from 'jsonwebtoken'
+import exclude from '../excluding'
 
 export const generateAccessToken = (user) => {
   const config = useRuntimeConfig()
   // console.log(111, config.jwtAccessTokenSecret);
   // console.log(222, config.jwtRefreshTokenSecret);
-  return jwt.sign({ userId: user.id }, config.jwtAccessTokenSecret, {
-    expiresIn: '10m'
+  // 将用户信息（密码除外）放到token中
+  return jwt.sign({ userId: user.id, user: exclude(user, ['password']) }, config.jwtAccessTokenSecret, {
+    expiresIn: '1m'
   })
 }
 
@@ -44,6 +46,7 @@ export const decodeRefreshToken = (token) => {
     const config = useRuntimeConfig()
     return jwt.verify(token, config.jwtRefreshTokenSecret)
   } catch (error) {
+    // 过期或者token不对
     return null
   }
 }
@@ -53,6 +56,7 @@ export const decodeAccessToken = (token) => {
     const config = useRuntimeConfig()
     return jwt.verify(token, config.jwtAccessTokenSecret)
   } catch (error) {
+    // 过期或者token不对
     return null
   }
 }

@@ -66,8 +66,4 @@ onBeforeMount(() => {
   console.log('auth: onBeforeMount')
   initAuth()
 })
-
-onMounted( ()=> {
-  console.log('auth: onMounted');
-})
 </script>

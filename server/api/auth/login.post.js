@@ -1,7 +1,7 @@
 // curl -X POST -i -H 'Content-Type:application/json' -d '{"email":"test@gmail.com","username":"six","password":"123456"}' localhost:3000/api/auth/login
 import { getUserByUsername } from '../../db/user'
 import bcrypt from 'bcrypt'
-import { generateTokens, sendRefreshToken } from '../../utils/jwt'
+import { generateTokens } from '../../utils/jwt'
 import exclude from '../../excluding'
 import { createRefreshToken } from '../../db/refreshToken'
 
@@ -35,11 +35,12 @@ export default defineEventHandler(async (event) => {
   })
 
   // refreshToken设置到cookie中
-  sendRefreshToken(event, refreshToken)
+  // sendRefreshToken(event, refreshToken)
 
   // accessToken和用户信息返回给客户端
   return {
     access_token: accessToken,
+    refresh_token: refreshToken,
     user: exclude(user, ['password'])
   }
 })
