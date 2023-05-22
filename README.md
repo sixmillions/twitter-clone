@@ -41,3 +41,8 @@ IjZAgcfl7p92ldGxad68LJZdL17lhWy: 24-byte (192-bit) 的 hash, 用 Radix-64 编码
 - 每次的 salt 是随机的生成的，不用担心 salt 会泄露
 - 就算密文泄露，也无法推导出密码，因为hash不可逆
 
+# token 认证过程
+
+> http://www.rfcreader.com/#rfc6749
+
+> https://juejin.cn/post/6859572307505971213

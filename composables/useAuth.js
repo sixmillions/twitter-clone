@@ -101,18 +101,18 @@ export default () => {
   }
 
   /**
-   * 刷新 accessToken，实现token延长
+   * 设置定时器自动刷新accessToken，实现token延长
    * 这里设置的是9分钟，因为，token设置了10分钟有效期
    */
   const reRefreshAccessToken = () => {
     const authToken = useAuthToken()
-    console.log('刷新accessToken过期时间', authToken.value);
+    // console.log('刷新accessToken过期时间', authToken.value);
     if (!authToken) {
       return
     }
 
     setTimeout(async () => {
-      console.log("刷新accessToken过期时间")
+      // console.log("定时器刷新accessToken过期时间")
       await refreshToken()
       reRefreshAccessToken()
     }, 9 * 60 * 1000)

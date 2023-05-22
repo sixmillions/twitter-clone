@@ -1,7 +1,5 @@
 import UrlPattern from 'url-pattern'
 import { decodeAccessToken } from '../utils/jwt'
-import { sendError } from 'h3'
-import { getUserById } from '../db/user'
 
 /**
  * 所有路由都会走这里
@@ -40,11 +38,15 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // const user = await getUserById(decode.userId)
+    // 从accessToken中解析出来用户信息
     const user = decode.user
     event.context.auth = { user }
   } catch (error) {
     console.log('middleware auth error', error);
+    return sendError(event, createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized'
+    }))
   }
 
 })

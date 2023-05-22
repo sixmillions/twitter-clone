@@ -1,13 +1,16 @@
 import jwt from 'jsonwebtoken'
 import exclude from '../excluding'
 
+/**
+ * 生成accessToken
+ */
 export const generateAccessToken = (user) => {
   const config = useRuntimeConfig()
   // console.log(111, config.jwtAccessTokenSecret);
   // console.log(222, config.jwtRefreshTokenSecret);
   // 将用户信息（密码除外）放到token中
   return jwt.sign({ userId: user.id, user: exclude(user, ['password']) }, config.jwtAccessTokenSecret, {
-    expiresIn: '1m'
+    expiresIn: '10m'
   })
 }
 

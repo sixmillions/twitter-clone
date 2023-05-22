@@ -29,7 +29,6 @@ export const getUserByUsername = (username) => {
     }
   }).catch((error) => {
     console.error('db user getUserByUsername: ', error);
-    throw error
   })
   return user
 }
