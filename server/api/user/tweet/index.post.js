@@ -1,5 +1,6 @@
 import formidable from 'formidable'
 import { createTweet } from '../../../db/tweet'
+import { createMediaFile } from '../../../db/mediaFile'
 
 export default defineEventHandler(async (event) => {
 
@@ -23,6 +24,18 @@ export default defineEventHandler(async (event) => {
     userId: userId
   }
   const tweet = await createTweet(tweetData)
+
+  const filePromises = Object.keys(files).map(async key => {
+    return createMediaFile({
+      // TODO
+      url: '',
+      providerPublicId: 'test_id',
+      userId: userId,
+      tweetId: tweet.id
+    })
+  })
+
+  await Promise.all(filePromises)
 
   return {
     hello: tweet

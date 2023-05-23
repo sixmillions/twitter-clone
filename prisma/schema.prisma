@@ -25,6 +25,7 @@ model User {
 
   refreshToken RefreshToken[]
   tweet        Tweet[]
+  mediaFile    MediaFile[]
 
   @@map("tm_user")
 }
@@ -35,7 +36,8 @@ model RefreshToken {
   token     String    @unique @db.VarChar(200)
   createdAt DateTime? @default(now()) @map("created_at")
   updatedAt DateTime? @default(now()) @updatedAt @map("update_at")
-  user      User      @relation(fields: [userId], references: [id])
+
+  user User @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@map("tt_refresh_token")
@@ -47,14 +49,31 @@ model Tweet {
   userId    Int       @map("user_id")
   createdAt DateTime? @default(now()) @map("created_at")
   updatedAt DateTime? @default(now()) @updatedAt @map("update_at")
+  replyToId Int?      @map("reply_to_id")
 
-  user User @relation(fields: [userId], references: [id])
-
-  replyToId Int?    @map("reply_to_id")
-  replyTo   Tweet?  @relation("replies", fields: [replyToId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  replies   Tweet[] @relation("replies")
+  user       User        @relation(fields: [userId], references: [id])
+  replyTo    Tweet?      @relation("replies", fields: [replyToId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  replies    Tweet[]     @relation("replies")
+  mediaFiles MediaFile[]
 
   @@index([userId])
   @@index([replyToId])
   @@map("tt_tweet")
+}
+
+model MediaFile {
+  id               Int       @id @default(autoincrement()) @map("media_file_id")
+  url              String    @map("url") @db.VarChar(100)
+  providerPublicId String    @map("provider_public_id") @db.VarChar(100)
+  createdAt        DateTime? @default(now()) @map("created_at")
+  updatedAt        DateTime? @default(now()) @updatedAt @map("update_at")
+  userId           Int       @map("user_id")
+  tweetId          Int       @map("tweet_id")
+
+  user  User   @relation(fields: [userId], references: [id])
+  tweet Tweet? @relation(fields: [tweetId], references: [id])
+
+  @@index([userId])
+  @@index([tweetId])
+  @@map("tt_media_file")
 }

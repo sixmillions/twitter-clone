@@ -3,11 +3,11 @@ import { prisma } from "."
 /**
  * 保存refresh token
  */
-export const createTweet = (tweetData) => {
-  const tweet = prisma.tweet.create({
-    data: tweetData
+export const createMediaFile = (mediaFile) => {
+  const file = prisma.mediaFile.create({
+    data: mediaFile
   }).catch((error) => {
     console.error('db tweet createTweet: ', error);
   })
-  return tweet
+  return file
 }
