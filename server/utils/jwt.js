@@ -44,23 +44,89 @@ export const sendRefreshToken = (event, token) => {
   })
 }
 
-export const decodeRefreshToken = (token) => {
+/**
+ * 校验 refreshToken，返回payload
+ */
+export const verifyRefreshToken = (token) => {
   try {
     const config = useRuntimeConfig()
     return jwt.verify(token, config.jwtRefreshTokenSecret)
   } catch (error) {
     // 过期或者token不对
+    if (error.name === 'TokenExpiredError') {
+      // if(error instanceof jwt.TokenExpiredError) {
+      // 过期
+      // https://github.com/auth0/node-jsonwebtoken#tokenexpirederror
+    } else {
+      // 其他错误
+      // https://github.com/auth0/node-jsonwebtoken#jsonwebtokenerror
+    }
     return null
   }
 }
 
-export const decodeAccessToken = (token) => {
+/**
+ * 解析 refreshToken 的 payload，不关系token有效期
+ */
+export const decodeRefreshToken = (token) => {
+  try {
+    const config = useRuntimeConfig()
+    return jwt.verify(token, config.jwtRefreshTokenSecret)
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      // 如果只是过期错误，允许解析出payload
+      try {
+        return jwt.decode(token)
+      } catch (error) {
+        // token格式不对之类的错误
+        return null
+      }
+    }
+    // token 被篡改
+    return null
+  }
+}
+
+
+/**
+ * 校验 accessToken，返回payload
+ */
+export const verifyAccessToken = (token) => {
   try {
     const config = useRuntimeConfig()
     return jwt.verify(token, config.jwtAccessTokenSecret)
   } catch (error) {
     // 过期或者token不对
+    // if(error.name === 'TokenExpiredError') {
+    if (error instanceof jwt.TokenExpiredError) {
+      // 过期
+      // https://github.com/auth0/node-jsonwebtoken#tokenexpirederror
+    } else {
+      // 其他错误
+      // https://github.com/auth0/node-jsonwebtoken#jsonwebtokenerror
+    }
     return null
   }
 }
 
+/**
+ * 解析 accessToken 的 payload，不关系token有效期
+ */
+export const decodeAccessToken = (token) => {
+  try {
+    const config = useRuntimeConfig()
+    return jwt.verify(token, config.jwtAccessTokenSecret)
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      // 如果只是过期错误，允许解析出payload
+      try {
+        return jwt.decode(token)
+      } catch (error) {
+        // token格式不对之类的错误
+        return null
+      }
+    }
+    // token 被篡改
+    return null
+  }
+}

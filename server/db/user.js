@@ -30,6 +30,7 @@ export const getUserByUsername = (username) => {
   }).catch((error) => {
     console.error('db user getUserByUsername: ', error);
   })
+  // 查不到或者报错的时候返回null
   return user
 }
 
@@ -43,7 +44,7 @@ export const getUserById = (id) => {
     }
   }).catch((error) => {
     console.error('db user getUserById: ', error);
-    throw error
   })
+  // 查不到或者报错的时候返回null
   return user
 }

@@ -1,5 +1,5 @@
 import UrlPattern from 'url-pattern'
-import { decodeAccessToken } from '../utils/jwt'
+import { verifyAccessToken } from '../utils/jwt'
 
 /**
  * 所有路由都会走这里
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
   // authorization:Bear xxxxx
   const token = event.node.req.headers['authorization']?.split(' ')[1]
 
-  const decode = decodeAccessToken(token)
+  const decode = verifyAccessToken(token)
 
   if (!decode) {
     return sendError(event, createError({

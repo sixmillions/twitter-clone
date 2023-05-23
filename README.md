@@ -6,6 +6,13 @@
 
 > logo：https://gist.github.com/hassnian/a8ef7f243dcc933887b31af77e73df29
 
+# 安装
+
+```bash
+pnpm i
+npx prisma generate
+```
+
 # bcrypt原理
 
 前提：Hash不可逆
@@ -46,3 +53,73 @@ IjZAgcfl7p92ldGxad68LJZdL17lhWy: 24-byte (192-bit) 的 hash, 用 Radix-64 编码
 > http://www.rfcreader.com/#rfc6749
 
 > https://juejin.cn/post/6859572307505971213
+
+## jsonwebtoken
+
+> https://github.com/auth0/node-jsonwebtoken
+
+### 签发
+
+```js
+const mySecret = 'my-salt'
+
+// 直接签发
+var token = jwt.sign({ foo: 'bar' }, mySecret);
+
+// 可以指定算法，可以传回调函数
+jwt.sign({ foo: 'bar' }, mySecret, { algorithm: 'RS256' }, function(err, token) {
+  console.log(token);
+})
+
+// 设置过期时间
+token = jwt.sign({ foo: 'bar' }, mySecret, { expiresIn: '1h' });
+```
+
+### 校验
+
+```js
+const mySecret = 'my-salt'
+
+var decoded = jwt.verify(token, mySecret);
+
+// verify a token symmetric
+jwt.verify(token, mySecret, function(err, decoded) {
+  console.log(decoded.foo) // bar
+  // 过期或者错误就解析不出decoded
+});
+
+try {
+  var decoded = jwt.verify(token, 'wrong-secret');
+} catch(err) {
+  if(error.name === 'TokenExpiredError') {
+    // 过期
+    // https://github.com/auth0/node-jsonwebtoken#tokenexpirederror
+  }
+}
+```
+
+### 解析payload
+
+从token中解析出负载，不关心token是否过期
+
+#### 使用decode
+
+jsonwebtoken自带的decode
+
+```js
+import jwt from 'jsonwebtoken'
+
+const payload = jwt.decode(token)
+```
+
+#### 使用 `jwt-decode`
+
+```bash
+pnpm install jwt-decode
+```
+
+```js
+import jwt_decoded from 'jwt-decode'
+
+const payload = jwt_decoded(token)
+```
