@@ -10,7 +10,8 @@ export default defineEventHandler(async (event) => {
 
   // 需要认证的url
   const endpoints = [
-    '/api/auth/user'
+    '/api/auth/user',
+    '/api/user/tweet',
   ]
 
   const isHandledByThisMiddleware = endpoints.some(endpoint => {

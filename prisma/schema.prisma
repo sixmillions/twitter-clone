@@ -23,14 +23,15 @@ model User {
   createdAt DateTime? @default(now()) @map("created_at")
   updatedAt DateTime? @default(now()) @updatedAt @map("update_at")
 
-  RefreshToken RefreshToken[]
+  refreshToken RefreshToken[]
+  tweet        Tweet[]
 
   @@map("tm_user")
 }
 
 model RefreshToken {
   id        Int       @id @default(autoincrement())
-  userId    Int
+  userId    Int       @map("user_id")
   token     String    @unique @db.VarChar(200)
   createdAt DateTime? @default(now()) @map("created_at")
   updatedAt DateTime? @default(now()) @updatedAt @map("update_at")
@@ -38,4 +39,22 @@ model RefreshToken {
 
   @@index([userId])
   @@map("tt_refresh_token")
+}
+
+model Tweet {
+  id        Int       @id @default(autoincrement()) @map("tweet_id")
+  text      String    @map("cnt") @db.VarChar
+  userId    Int       @map("user_id")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedAt DateTime? @default(now()) @updatedAt @map("update_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  replyToId Int?    @map("reply_to_id")
+  replyTo   Tweet?  @relation("replies", fields: [replyToId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  replies   Tweet[] @relation("replies")
+
+  @@index([userId])
+  @@index([replyToId])
+  @@map("tt_tweet")
 }
