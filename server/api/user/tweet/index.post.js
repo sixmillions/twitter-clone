@@ -1,6 +1,7 @@
 import formidable from 'formidable'
 import { createTweet } from '../../../db/tweet'
 import { createMediaFile } from '../../../db/mediaFile'
+import { uploadToCloudinary } from '../../../utils/cloudinary'
 
 export default defineEventHandler(async (event) => {
 
@@ -26,10 +27,12 @@ export default defineEventHandler(async (event) => {
   const tweet = await createTweet(tweetData)
 
   const filePromises = Object.keys(files).map(async key => {
+    const file = files[key]
+    const cloudinaryResource = await uploadToCloudinary(file.filepath)
+    // console.log('上传文件结果：', cloudinaryResource);
     return createMediaFile({
-      // TODO
-      url: '',
-      providerPublicId: 'test_id',
+      url: cloudinaryResource.secure_url,
+      providerPublicId: cloudinaryResource.public_id,
       userId: userId,
       tweetId: tweet.id
     })
@@ -38,6 +41,6 @@ export default defineEventHandler(async (event) => {
   await Promise.all(filePromises)
 
   return {
-    hello: tweet
+    tweet
   }
 })

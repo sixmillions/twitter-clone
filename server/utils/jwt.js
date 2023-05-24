@@ -9,7 +9,7 @@ export const generateAccessToken = (user) => {
   // console.log(111, config.jwtAccessTokenSecret);
   // console.log(222, config.jwtRefreshTokenSecret);
   // 将用户信息（密码除外）放到token中
-  return jwt.sign({ userId: user.id, user: exclude(user, ['password']) }, config.jwtAccessTokenSecret, {
+  return jwt.sign({ userId: user.id, user: exclude(user, ['password', 'createdAt', 'updatedAt']) }, config.jwtAccessTokenSecret, {
     expiresIn: '10m'
   })
 }
